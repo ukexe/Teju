@@ -1,11 +1,7 @@
 const COOKIE_NAME = '__Host-teju_session'
 const SESSION_TTL_SECONDS = 24 * 60 * 60
-const MAX_ATTEMPTS = 8
-const ATTEMPT_WINDOW_MS = 10 * 60 * 1000
-const BLOCK_DURATION_MS = 15 * 60 * 1000
 
 const encoder = new TextEncoder()
-const attempts = new Map()
 
 const securityHeaders = {
   'Cache-Control': 'no-store, max-age=0',
@@ -91,48 +87,6 @@ const hasValidSession = async (request, secret) => {
   return constantTimeEqual(suppliedSignature, expectedSignature)
 }
 
-const getAttemptKey = (request) =>
-  request.headers.get('CF-Connecting-IP') || 'unknown'
-
-const getAttemptState = (key) => {
-  const now = Date.now()
-  const current = attempts.get(key)
-  if (!current || current.windowEndsAt <= now) {
-    const fresh = {
-      count: 0,
-      windowEndsAt: now + ATTEMPT_WINDOW_MS,
-      blockedUntil: 0,
-    }
-    attempts.set(key, fresh)
-    return fresh
-  }
-  return current
-}
-
-const recordFailure = (key) => {
-  const state = getAttemptState(key)
-  state.count += 1
-  if (state.count >= MAX_ATTEMPTS) {
-    state.blockedUntil = Date.now() + BLOCK_DURATION_MS
-  }
-
-  if (attempts.size > 500) {
-    const now = Date.now()
-    for (const [storedKey, stored] of attempts) {
-      if (stored.windowEndsAt <= now && stored.blockedUntil <= now) {
-        attempts.delete(storedKey)
-      }
-    }
-  }
-
-  return state
-}
-
-const isBlocked = (key) => {
-  const state = getAttemptState(key)
-  return state.blockedUntil > Date.now()
-}
-
 const nonce = () => {
   const bytes = new Uint8Array(16)
   crypto.getRandomValues(bytes)
@@ -150,7 +104,7 @@ const loginPage = (message = '', status = 200) => {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <title>Private Birthday Dossier</title>
+    <title>Protected Access</title>
     <style nonce="${styleNonce}">
       :root {
         color: #29172b;
@@ -290,17 +244,13 @@ const loginPage = (message = '', status = 200) => {
   </head>
   <body>
     <main>
-      <span class="stamp">Private file</span>
-      <p class="eyebrow">Teju · confidential</p>
-      <h1>The love dossier is <em>locked.</em></h1>
-      <p class="intro">This birthday file is meant for one person. Enter the shared password to continue.</p>
+      <h1>Enter password</h1>
       ${safeMessage}
       <form action="/__auth" method="post">
         <label for="password">Password</label>
         <input id="password" name="password" type="password" maxlength="128" autocomplete="current-password" required autofocus>
-        <button type="submit">Open the dossier</button>
+        <button type="submit">Continue</button>
       </form>
-      <footer>Protected at the edge</footer>
     </main>
   </body>
 </html>`
@@ -327,31 +277,6 @@ const redirect = (location, cookie) =>
 
 const authenticate = async (context) => {
   const { request, env } = context
-  const url = new URL(request.url)
-  const origin = request.headers.get('Origin')
-  if (origin && origin !== url.origin) {
-    return loginPage('This request could not be verified.', 403)
-  }
-
-  const contentLength = Number(request.headers.get('Content-Length') || 0)
-  const contentType = request.headers.get('Content-Type') || ''
-  if (
-    contentLength > 1024 ||
-    !contentType.startsWith('application/x-www-form-urlencoded')
-  ) {
-    return loginPage('This request could not be verified.', 400)
-  }
-
-  const key = getAttemptKey(request)
-  if (isBlocked(key)) {
-    const response = loginPage(
-      'Too many attempts were made. Please wait a little while and try again.',
-      429,
-    )
-    response.headers.set('Retry-After', '900')
-    return response
-  }
-
   const body = await request.text()
   const password = new URLSearchParams(body).get('password') || ''
   const [suppliedHash, expectedHash] = await Promise.all([
@@ -360,15 +285,9 @@ const authenticate = async (context) => {
   ])
 
   if (!constantTimeEqual(suppliedHash, expectedHash)) {
-    recordFailure(key)
-    await new Promise((resolve) => setTimeout(resolve, 450))
-    return loginPage(
-      'That password was not accepted. Please try again.',
-      401,
-    )
+    return loginPage('Incorrect password.', 401)
   }
 
-  attempts.delete(key)
   const session = await createSession(env.AUTH_SECRET)
   const cookie = `${COOKIE_NAME}=${session}; Path=/; Max-Age=${SESSION_TTL_SECONDS}; HttpOnly; Secure; SameSite=Strict`
   return redirect('/', cookie)

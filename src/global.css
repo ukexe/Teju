@@ -1,0 +1,125 @@
+:root {
+  --paper: #fff7ee;
+  --paper-2: #fffdf9;
+  --blush: #f6b8c8;
+  --coral: #ff6f7d;
+  --cherry: #c93450;
+  --lavender: #bba8f2;
+  --butter: #ffe28a;
+  --mint: #b7e4d0;
+  --plum: #29172b;
+  --burgundy: #641e38;
+  --gold: #d6b36a;
+  --ink: #2d1d2f;
+  --muted: #705d70;
+  --line: rgba(41, 23, 43, 0.15);
+  --display: Georgia, 'Times New Roman', serif;
+  --sans: 'Avenir Next', Avenir, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+  background: var(--paper);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--paper);
+}
+
+body,
+button,
+a,
+video {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+button {
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+figure,
+blockquote,
+p,
+h1,
+h2,
+h3,
+ol,
+ul,
+dl,
+dd {
+  margin: 0;
+}
+
+::selection {
+  color: var(--paper);
+  background: var(--cherry);
+}
+
+:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 4px;
+}
+
+#root {
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

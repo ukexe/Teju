@@ -104,11 +104,11 @@ const loginPage = (message = '', status = 200) => {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <title>Protected Access</title>
+    <title>Restricted Access</title>
     <style nonce="${styleNonce}">
       :root {
-        color: #29172b;
-        background: #fff7ee;
+        color: #f4f4f5;
+        background: #0b0d10;
         font-family: "Segoe UI", system-ui, sans-serif;
       }
       * { box-sizing: border-box; }
@@ -119,17 +119,10 @@ const loginPage = (message = '', status = 200) => {
         display: grid;
         place-items: center;
         padding: 1.25rem;
-        overflow: hidden;
-        background:
-          radial-gradient(circle at 14% 12%, rgba(246,184,200,.9), transparent 29rem),
-          radial-gradient(circle at 90% 88%, rgba(187,168,242,.48), transparent 24rem),
-          #fff7ee;
+        background: #0b0d10;
       }
       body::before, body::after {
-        position: fixed;
-        content: "";
-        border-radius: 50%;
-        pointer-events: none;
+        display: none;
       }
       body::before {
         width: 12rem;
@@ -148,12 +141,12 @@ const loginPage = (message = '', status = 200) => {
       main {
         position: relative;
         z-index: 1;
-        width: min(100%, 28rem);
-        padding: clamp(1.35rem, 5vw, 2.4rem);
-        border: 1px solid rgba(41,23,43,.15);
-        border-radius: 1.4rem;
-        background: rgba(255,253,249,.94);
-        box-shadow: 0 28px 80px rgba(72,34,66,.18);
+        width: min(100%, 22rem);
+        padding: 1.5rem;
+        border: 1px solid #282d35;
+        border-radius: .9rem;
+        background: #14171c;
+        box-shadow: 0 18px 50px rgba(0,0,0,.32);
       }
       .stamp {
         display: inline-block;
@@ -174,9 +167,10 @@ const loginPage = (message = '', status = 200) => {
         text-transform: uppercase;
       }
       h1 {
-        margin: 0;
-        font: 600 clamp(2.35rem, 11vw, 4rem)/.98 Georgia, serif;
-        letter-spacing: -.04em;
+        margin: 0 0 1.25rem;
+        color: #f4f4f5;
+        font: 600 1.3rem/1.3 "Segoe UI", system-ui, sans-serif;
+        letter-spacing: -.01em;
       }
       h1 em { color: #c93450; }
       .intro {
@@ -187,45 +181,46 @@ const loginPage = (message = '', status = 200) => {
       label {
         display: block;
         margin-bottom: .45rem;
+        color: #a8adb7;
         font-size: .78rem;
-        font-weight: 800;
+        font-weight: 600;
       }
       input {
         width: 100%;
         min-height: 50px;
         padding: .75rem .9rem;
-        border: 1px solid rgba(41,23,43,.24);
-        border-radius: .8rem;
-        color: #29172b;
-        background: #fff;
+        border: 1px solid #343a44;
+        border-radius: .55rem;
+        color: #f4f4f5;
+        background: #0d1014;
         font: inherit;
       }
       input:focus {
-        outline: 3px solid #ff6f7d;
+        border-color: #7e8795;
+        outline: 2px solid #7e8795;
         outline-offset: 2px;
       }
       button {
         width: 100%;
         min-height: 50px;
         margin-top: .8rem;
-        border: 0;
-        border-radius: 999px;
-        color: #fff;
-        background: #29172b;
-        box-shadow: 0 6px 0 #c93450;
-        font: 800 .92rem "Segoe UI", system-ui, sans-serif;
+        border: 1px solid #f4f4f5;
+        border-radius: .55rem;
+        color: #111318;
+        background: #f4f4f5;
+        font: 650 .92rem "Segoe UI", system-ui, sans-serif;
         cursor: pointer;
       }
+      button:hover { background: #fff; }
       button:active {
-        box-shadow: 0 2px 0 #c93450;
-        transform: translateY(4px);
+        transform: translateY(1px);
       }
       .error {
         margin: 0 0 .8rem;
         padding: .7rem .8rem;
         border-radius: .65rem;
-        color: #641e38;
-        background: #ffe3e5;
+        color: #fecaca;
+        background: #3a171b;
         font-size: .82rem;
         line-height: 1.4;
       }
@@ -244,7 +239,7 @@ const loginPage = (message = '', status = 200) => {
   </head>
   <body>
     <main>
-      <h1>Enter password</h1>
+      <h1>Restricted access</h1>
       ${safeMessage}
       <form action="/__auth" method="post">
         <label for="password">Password</label>

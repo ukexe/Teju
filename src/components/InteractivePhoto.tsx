@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useRef,
   useState,
   type ImgHTMLAttributes,
@@ -41,14 +42,54 @@ export default function InteractivePhoto({
     scale: 1,
   })
   const [adjusting, setAdjusting] = useState(false)
+  const [controlsVisible, setControlsVisible] = useState(false)
+  const hideTimer = useRef<number | null>(null)
   const pointers = useRef(new Map<number, Point>())
   const previousGesture = useRef<{
     center: Point
     distance: number | null
   } | null>(null)
 
+  const cancelScheduledHide = () => {
+    if (hideTimer.current !== null) {
+      window.clearTimeout(hideTimer.current)
+      hideTimer.current = null
+    }
+  }
+
+  const scheduleHide = () => {
+    cancelScheduledHide()
+    hideTimer.current = window.setTimeout(() => {
+      setControlsVisible(false)
+      hideTimer.current = null
+    }, 3500)
+  }
+
+  const revealControls = (keepOpen = false) => {
+    setControlsVisible(true)
+    cancelScheduledHide()
+    if (!keepOpen) scheduleHide()
+  }
+
+  useEffect(() => {
+    return cancelScheduledHide
+  }, [])
+
+  useEffect(() => {
+    if (!controlsVisible || adjusting) return
+
+    const hideWhileScrolling = () => {
+      cancelScheduledHide()
+      setControlsVisible(false)
+    }
+
+    window.addEventListener('scroll', hideWhileScrolling, { passive: true })
+    return () => window.removeEventListener('scroll', hideWhileScrolling)
+  }, [adjusting, controlsVisible])
+
   const fitPhoto = () => {
     setTransform({ x: 0, y: 0, scale: 1 })
+    revealControls()
   }
 
   const zoomBy = (factor: number) => {
@@ -56,6 +97,17 @@ export default function InteractivePhoto({
       ...current,
       scale: clampScale(current.scale * factor),
     }))
+    revealControls(adjusting)
+  }
+
+  const toggleAdjusting = () => {
+    setAdjusting((current) => {
+      const next = !current
+      setControlsVisible(true)
+      cancelScheduledHide()
+      if (!next) scheduleHide()
+      return next
+    })
   }
 
   const getGesture = () => {
@@ -141,14 +193,20 @@ export default function InteractivePhoto({
     <div
       className={`interactive-photo${adjusting ? ' is-adjusting' : ''}${
         compact ? ' is-compact' : ''
-      }`}
+      }${controlsVisible ? ' controls-visible' : ''}`}
       role="group"
       aria-label={`Movable photo: ${alt}`}
+      tabIndex={0}
       onPointerDown={beginPointer}
       onPointerMove={movePointer}
       onPointerUp={endPointer}
       onPointerCancel={endPointer}
       onWheel={handleWheel}
+      onClick={(event) => {
+        if ((event.target as HTMLElement).closest('.photo-controls')) return
+        revealControls(adjusting)
+      }}
+      onFocus={() => revealControls(adjusting)}
       onDoubleClick={fitPhoto}
     >
       <img
@@ -163,10 +221,11 @@ export default function InteractivePhoto({
         className="photo-controls"
         aria-label={`Controls for ${alt}`}
         onPointerDown={(event) => event.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
-          onClick={() => setAdjusting((current) => !current)}
+          onClick={toggleAdjusting}
           aria-pressed={adjusting}
           aria-label={adjusting ? 'Finish moving photo' : 'Move photo'}
           title={adjusting ? 'Finish moving photo' : 'Move photo'}

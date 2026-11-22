@@ -39,6 +39,7 @@ import {
   Utensils,
   X,
 } from 'lucide-react'
+import InteractivePhoto from './components/InteractivePhoto'
 import './dossier.css'
 
 const HeroScene = lazy(() => import('./components/HeroScene'))
@@ -58,7 +59,7 @@ const chapters = [
 
 const apologies = [
   'I sincerely apologise for what I apparently did in your sleep.',
-  'I accept full responsibility for my dream-universe cameo. My real-world record remains spotless.',
+  'I accept full responsibility for my dream universe cameo. My real world record remains spotless.',
   'Dear Dream Court: I was asleep too, but somehow I would still like to say sorry.',
   'Official apology #4: Imaginary me has been placed on extremely strict probation.',
 ]
@@ -317,7 +318,7 @@ function LoveDossier() {
               <Reveal>
                 <div className="hero-meta">
                   <span>Birthday special</span>
-                  <span>File № TEJU-01</span>
+                  <span>File № TEJU 01</span>
                 </div>
                 <div className="confidential-stamp">
                   Confidential: girlfriend research
@@ -416,7 +417,7 @@ function LoveDossier() {
               <ChapterLabel number={2} eyebrow="The beauty problem" />
               <div className="headline-grid">
                 <div>
-                  <p className="kicker">Finding № BEAUTY-1000</p>
+                  <p className="kicker">Finding № BEAUTY 1000</p>
                   <h2 id="chapter-2-title">
                     Let&apos;s address the elephant in the room.
                     <em> You&apos;re ridiculously beautiful.</em>
@@ -433,7 +434,7 @@ function LoveDossier() {
             <div className="beauty-layout">
               <Reveal className="photo-stack">
                 <figure className="polaroid polaroid-main">
-                  <img
+                  <InteractivePhoto
                     src="/media/teju-portrait.webp"
                     alt="Teju smiling softly in a café"
                     width="576"
@@ -444,9 +445,9 @@ function LoveDossier() {
                   <figcaption>Exhibit B: unfair advantage</figcaption>
                 </figure>
                 <figure className="polaroid polaroid-back">
-                  <img
+                  <InteractivePhoto
                     src="/media/teju-full.webp"
-                    alt="Teju in a relaxed full-length café portrait"
+                    alt="Teju in a relaxed full length café portrait"
                     width="960"
                     height="1280"
                     loading="lazy"
@@ -493,7 +494,7 @@ function LoveDossier() {
                 <blockquote className="pull-quote">
                   <Quote aria-hidden="true" />
                   You&apos;re the kind of pretty that makes someone forget what
-                  they were about to say. Unfortunately, I have first-hand
+                  they were about to say. Unfortunately, I know this from
                   experience.
                 </blockquote>
               </Reveal>
@@ -549,7 +550,7 @@ function LoveDossier() {
               <Reveal className="personality-photo-wrap" delay={0.1}>
                 <figure className="taped-photo">
                   <div className="washi" aria-hidden="true" />
-                  <img
+                  <InteractivePhoto
                     src="/media/teju-smile.webp"
                     alt="Teju smiling during a candid café moment"
                     width="1024"
@@ -562,7 +563,7 @@ function LoveDossier() {
                 <div className="personality-verdict">
                   <Brain aria-hidden="true" />
                   <p>
-                    Disney princess + stand-up comedian + very attractive
+                    Disney princess + stand up comedian + very attractive
                     lawyer who wins arguments against me.
                   </p>
                   <span>And I hate how good you are at it.</span>
@@ -633,7 +634,7 @@ function LoveDossier() {
 
               <Reveal className="food-visual" delay={0.1}>
                 <figure className="restaurant-ticket">
-                  <img
+                  <InteractivePhoto
                     src="/media/teju-colourful.webp"
                     alt="Teju in a colourful café setting"
                     width="1280"
@@ -686,7 +687,7 @@ function LoveDossier() {
                 <p>
                   You care about people. You&apos;re independent, thoughtful
                   and considerate. And you&apos;ve learned so much about me in
-                  such a short time—not only the obvious things, but the little
+                  such a short time. Not only the obvious things, but the little
                   things that make me who I am.
                 </p>
                 <div className="handwritten-list">
@@ -705,7 +706,7 @@ function LoveDossier() {
                 </blockquote>
                 <p className="letter-signoff">
                   And that means more to me than you probably realise.
-                  <span>— your very lucky boyfriend</span>
+                  <span>With love, your very lucky boyfriend</span>
                 </p>
                 <div className="pressed-flower" aria-hidden="true">
                   <span />
@@ -717,7 +718,7 @@ function LoveDossier() {
 
               <Reveal className="warm-photo-column" delay={0.12}>
                 <figure className="soft-photo">
-                  <img
+                  <InteractivePhoto
                     src="/media/teju-warm.webp"
                     alt="Teju seated with a warm, gentle smile"
                     width="960"
@@ -728,7 +729,7 @@ function LoveDossier() {
                   <figcaption>The softest part of the evidence file.</figcaption>
                 </figure>
                 <figure className="mini-photo">
-                  <img
+                  <InteractivePhoto
                     src="/media/teju-profile.webp"
                     alt="A relaxed candid portrait of Teju"
                     width="1280"
@@ -778,14 +779,14 @@ function LoveDossier() {
                   <div>
                     <p>ROLE</p>
                     <h3>Boyfriend Candidate</h3>
-                    <span className="id-code">ID: TEJU-BF-0001</span>
+                    <span className="id-code">ID: TEJU BF 0001</span>
                   </div>
                 </div>
                 <div className="barcode" aria-hidden="true" />
                 <div className="id-rating">
-                  <span>Self-assessment</span>
+                  <span>Self assessment</span>
                   <strong>9.8/10</strong>
-                  <small>−0.2 for occasionally annoying her</small>
+                  <small>0.2 deducted for occasionally annoying her</small>
                 </div>
               </Reveal>
 
@@ -797,7 +798,7 @@ function LoveDossier() {
                   </div>
                   <div>
                     <dt>Specialisation</dt>
-                    <dd>Artificial intelligence & artificial affection</dd>
+                    <dd>Ridiculously Dedicated Boyfriend Energy</dd>
                   </div>
                   <div>
                     <dt>Core competency</dt>
@@ -820,7 +821,7 @@ function LoveDossier() {
                   <span>UNIQUE SELLING PROPOSITION</span>
                   <p>
                     Can build AI systems, develop complicated software,
-                    troubleshoot technical problems—and occasionally struggle
+                    troubleshoot technical problems. He may still occasionally struggle
                     to understand why she&apos;s angry.
                   </p>
                 </div>
@@ -860,7 +861,7 @@ function LoveDossier() {
                 [
                   '02',
                   'Emotionally invested',
-                  'I want to actively contribute something positive to your life—not simply exist in it.',
+                  'I want to actively contribute something positive to your life, not simply exist in it.',
                   <HeartHandshake key="hands" />,
                 ],
                 [
@@ -924,7 +925,7 @@ function LoveDossier() {
               <ChapterLabel number={8} eyebrow="The relationship roadmap" />
               <p className="kicker">Strategy deck · subject to your approval</p>
               <h2 id="chapter-8-title">
-                My five-year strategic plan.
+                My five year strategic plan.
                 <em> Built to last beyond the slide.</em>
               </h2>
             </Reveal>
@@ -956,7 +957,7 @@ function LoveDossier() {
               <Reveal className="couple-memory" delay={0.1}>
                 <figure className="couple-polaroid">
                   <div className="paperclip" aria-hidden="true" />
-                  <img
+                  <InteractivePhoto
                     src="/media/us-together.webp"
                     alt="Teju and her boyfriend smiling together in a mirror selfie"
                     width="868"
@@ -1001,10 +1002,10 @@ function LoveDossier() {
           </div>
           <div className="chapter-inner">
             <Reveal>
-              <ChapterLabel number={9} eyebrow="Non-negotiable policies" />
-              <p className="kicker">Immortal devotion office · legally-ish binding</p>
+              <ChapterLabel number={9} eyebrow="Non negotiable policies" />
+              <p className="kicker">Immortal devotion office · lovingly binding</p>
               <h2 id="chapter-9-title">
-                My non-negotiable <em>relationship policies.</em>
+                My promises that are <em>not up for debate.</em>
               </h2>
             </Reveal>
 
@@ -1014,12 +1015,12 @@ function LoveDossier() {
                   <FileHeart aria-hidden="true" />
                   <div>
                     <span>RELATIONSHIP AGREEMENT</span>
-                    <small>Effective immediately · valid forever-ish</small>
+                    <small>Effective immediately · valid for a delightfully long time</small>
                   </div>
                 </div>
                 <ol className="policy-list">
                   {[
-                    'Never stop finding you attractive—even in questionable outfits.',
+                    'Never stop finding you attractive, even in questionable outfits.',
                     'Keep trying to understand you, even when it requires a PhD in girlfriend linguistics.',
                     'Never make you feel like you have to compete for my attention.',
                     'Celebrate your achievements as enthusiastically as my own.',
@@ -1039,7 +1040,7 @@ function LoveDossier() {
                     <strong>Additional clause</strong>
                     <p>
                       You are legally required to let me steal at least one bite
-                      of your food. This clause is non-negotiable.
+                      of your food. This clause is final.
                     </p>
                   </div>
                 </div>
@@ -1055,7 +1056,7 @@ function LoveDossier() {
                 <div className="dream-court-top">
                   <Gavel aria-hidden="true" />
                   <div>
-                    <span>CASE № DREAM-001</span>
+                    <span>CASE № DREAM 001</span>
                     <h3>The Dream Cheating Incident</h3>
                   </div>
                 </div>
@@ -1070,7 +1071,7 @@ function LoveDossier() {
                   </div>
                   <div>
                     <span>NOT GUILTY</span>
-                    <p>of any real-world cheating whatsoever</p>
+                    <p>of any real world cheating whatsoever</p>
                   </div>
                 </div>
                 <div className="apology-slip" aria-live="polite">
@@ -1088,13 +1089,14 @@ function LoveDossier() {
                   <Gavel size={18} aria-hidden="true" />
                 </button>
                 <small>
-                  Jurisdiction: Dreamland · Evidence: one dream · Real-world
+                  Jurisdiction: Dreamland · Evidence: one dream · Real world
                   evidence: absolutely none.
                 </small>
                 <figure className="court-cameo">
-                  <img
+                  <InteractivePhoto
+                    compact
                     src="/media/teju-candid.webp"
-                    alt="A composed side-profile portrait of Teju"
+                    alt="A composed side profile portrait of Teju"
                     width="960"
                     height="1280"
                     loading="lazy"
@@ -1151,7 +1153,7 @@ function LoveDossier() {
                 </ul>
                 <p>
                   I don&apos;t claim to be perfect. I just want to keep learning
-                  how to love you better—to be someone you can laugh with, cry
+                  how to love you better. I want to be someone you can laugh with, cry
                   with, grow with, depend on, and be completely yourself around.
                 </p>
               </Reveal>
@@ -1167,7 +1169,7 @@ function LoveDossier() {
                   playsInline
                   preload="metadata"
                   poster="/media/teju-video-poster.webp"
-                  aria-label="A short mirror-selfie video of Teju"
+                  aria-label="A short mirror selfie video of Teju"
                 >
                   <source src="/media/teju-selfie.mp4" type="video/mp4" />
                   Your browser does not support the video element.
@@ -1189,9 +1191,10 @@ function LoveDossier() {
 
             <Reveal className="final-envelope-wrap">
               <div className="heart-photo-stamp">
-                <img
+                <InteractivePhoto
+                  compact
                   src="/media/love-heart.webp"
-                  alt="A purple heart-shaped cushion with the word love"
+                  alt="A purple heart shaped cushion with the word love"
                   width="868"
                   height="1156"
                   loading="lazy"
@@ -1241,7 +1244,7 @@ function LoveDossier() {
                     <p>
                       I hope this year gives you as much warmth, laughter and
                       goodness as you bring into my life. Keep being brilliant,
-                      independent, caring, wonderfully unpredictable—and
+                      independent, caring and wonderfully unpredictable. Stay
                       completely yourself. I&apos;ll keep choosing you, learning
                       you and cheering for you.
                     </p>

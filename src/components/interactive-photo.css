@@ -1,0 +1,136 @@
+.interactive-photo {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  background:
+    linear-gradient(45deg, rgba(41, 23, 43, 0.04) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(41, 23, 43, 0.04) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(41, 23, 43, 0.04) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(41, 23, 43, 0.04) 75%),
+    #f7efe8;
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0;
+  background-size: 16px 16px;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.interactive-photo.is-adjusting {
+  cursor: grabbing;
+  touch-action: none;
+}
+
+.interactive-photo > img {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  object-fit: contain;
+  object-position: center;
+  transform-origin: center;
+  transition: transform 80ms linear;
+  will-change: transform;
+}
+
+.interactive-photo.is-adjusting > img {
+  transition: none;
+}
+
+.photo-controls {
+  position: absolute;
+  z-index: 4;
+  right: 0.45rem;
+  bottom: 0.45rem;
+  display: flex;
+  gap: 0.28rem;
+  padding: 0.28rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background: rgba(41, 23, 43, 0.84);
+  box-shadow: 0 8px 20px rgba(41, 23, 43, 0.24);
+  opacity: 0.88;
+  backdrop-filter: blur(8px);
+  transition: opacity 160ms ease;
+}
+
+.interactive-photo:hover .photo-controls,
+.interactive-photo:focus-within .photo-controls,
+.interactive-photo.is-adjusting .photo-controls {
+  opacity: 1;
+}
+
+.photo-controls button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: transparent;
+}
+
+.photo-controls button:hover,
+.photo-controls button:focus-visible,
+.photo-controls button[aria-pressed='true'] {
+  color: #29172b;
+  background: #ffe28a;
+}
+
+.photo-controls svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.photo-instruction {
+  position: absolute;
+  z-index: 3;
+  top: 0.55rem;
+  left: 50%;
+  padding: 0.4rem 0.62rem;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(41, 23, 43, 0.82);
+  font: 750 0.62rem/1.2 var(--sans);
+  white-space: nowrap;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.interactive-photo.is-compact .photo-controls {
+  top: 50%;
+  right: 0.3rem;
+  bottom: auto;
+  flex-direction: column;
+  transform: translateY(-50%);
+}
+
+.interactive-photo.is-compact .photo-controls button {
+  width: 44px;
+  height: 44px;
+}
+
+@media (max-width: 430px) {
+  .photo-controls {
+    right: 0.35rem;
+    bottom: 0.35rem;
+  }
+
+  .photo-controls button {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-photo > img,
+  .photo-controls {
+    transition: none;
+  }
+}
